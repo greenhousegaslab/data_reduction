@@ -40,16 +40,16 @@ References
 Contact information
 ----------------------------------------------------------
 
-Scot Miller <br>
-Johns Hopkins University <br>
-Department of Environmental Health and Engineering <br>
-Email: smill191 [at] jhu.edu OR scot.m.miller [at] gmail.com <br>
-http://greenhousegaslab.org/ 
-
 Xiaoling Liu <br>
 Johns Hopkins University <br>
 Department of Environmental Health and Engineering <br>
 Email: xiaolingliu96 [at] gmail.com
+http://greenhousegaslab.org/ 
+
+Scot Miller <br>
+Johns Hopkins University <br>
+Department of Environmental Health and Engineering <br>
+Email: smill191 [at] jhu.edu OR scot.m.miller [at] gmail.com <br>
 http://greenhousegaslab.org/ 
 
 

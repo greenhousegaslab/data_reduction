@@ -46,7 +46,6 @@ CalculateRange <- function(base_point, oco2info_need){
   # sill represents variability in observations that are located at long distance
   # from one another.
   # range represents distance at which two measurements are practically uncorrelated.
-  # Value set up here is based on expert experience.
   kInitialValues <- expand.grid(seq(0, 100, by = 5), seq(100, 135, by = 5))
   # Parameters for fitting variogram.
   # kCovModel represents model used to fit variogram.

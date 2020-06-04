@@ -1,8 +1,8 @@
 #-----------------------------------------------------------------------------#
 # SCRIPT: CalculateRange.R                                                    #
-# PURPOSE: Calculate correlation length and use local kriging                 #
+# PURPOSE: Calculate correlation length and use ordinary kriging              #
 #          to estimate co2.                                                   #
-# Xiaoling Liu, June 11, 2019                                                #
+# Xiaoling Liu, June 11, 2019                                                 #
 #-----------------------------------------------------------------------------#
 
 CalculateRange <- function(base_point, oco2info_need){
@@ -24,35 +24,53 @@ CalculateRange <- function(base_point, oco2info_need){
   #-----------------------------------#
   # Constant Variables                #
   #-----------------------------------#
-  # Choose observations within a circle with radius kDistance
-  # Observations chosen are used for variogram
+  #! CHANGE THE PARAMETERS BELOW FOR YOUR PARTICULAR SETUP
+  # kDistance is the cut-off distance for choosing observations around 
+  # the base point to plot the empirical variogram.
   # (unit: m)
   kDistance <- 2000000
-  # Reference point at one of the edges of your domain 
-  # Used for coordinates conversion
+  # Latitude and longtitude of the reference point.
+  # The reference point is an original point on one of the edges of
+  # the domain. It is used for converting the observation coordinates
+  # from lat/lon to kilometers.
   kRefLon <- -180
   kRefLat <- 9
-  # Parameters for plotting experimental variogram
+  # Parameters for plotting empirical variogram.
+  # kBin represents bin. kMaxDist represents cut-off distance.
+  # Note: kBin recommends 3~6. kMaxDist recommends to be equal to or smaller than kDistance.
   # (unit for kMaxDist: km)
-  # Note: kMaxDist should be equal to or smaller than kDistance.
   kBin <- 6
   kMaxDist <- 2000
-  # Initial parameters for fitting variogram
+  # Initial parameters for fitting variogram.
+  # expand.grid(sill, 1/3 * range)
+  # sill represents variability in observations that are located at long distance
+  # from one another.
+  # range represents distance at which two measurements are practically uncorrelated.
+  # Value set up here is based on expert experience.
   kInitialValues <- expand.grid(seq(0, 100, by = 5), seq(100, 135, by = 5))
+  # Parameters for fitting variogram.
+  # kCovModel represents model used to fit variogram.
+  # kNugget represents variability that is uncorrelated from one observation
+  # to the next.
+  # kWeights represents type weights used in the loss function.
   kCovModel = 'exp'
-  kNuggetLand <- (1.3)^2
+  kNugget <- (1.3)^2
   kWeights = 'npairs'
-  # If range < 10km, re-set bin and maximum distance for experimental variogram
-  # Reason: we found that most of the fitting variograms with range smaller than 
-  #         10km had bad fit, and so we re-set bin and max distance and re-fit.
+  # kReFitThreshold is the threshold to determine whether to re-calculate range.
+  # Reason for using 10: in our case project, most of the fitting variograms 
+  # with range smaller than 10km had bad fit, thus we re-set to kBinAgain and kMaxDistAgain 
+  # and re-fit.
   kReFitThreshold <- 10
-  # Re-set bin and maximum distance for experimental variogram
   kBinAgain <- 5
   kMaxDistAgain <- 200
-  # Threshold for range
+  # Maximum and minimum threshold for range.
+  # We set range that are larger than 1000km to be 1000km 
+  # and range that are smaller than 20km to be 20km.
   kMaxRange <- 1000
   kMinRange <- 20
   # Parameters for kriging
+  # kKriging represents type of kriging to be performed.
+  # kKrigingCovModel represents the name of the model for the correlation function. 
   kKriging <- 'ok'
   kKrigingCovModel <- 'exponential'
 
@@ -131,13 +149,13 @@ CalculateRange <- function(base_point, oco2info_need){
   # Calculate correlation length      #
   #-----------------------------------#
   if (nrow(data_proc) > 1){
-    # plot the experimental variogram
+    # plot the empirical variogram
     geodata <- as.geodata(data_proc, coords.col = c(1:2), data.col = 3)
     vario_exp <- variog(geodata, uvec = kBin, max.dist = kMaxDist, bin.cloud = T)
     # fit variogram
     vario_wls <- variofit(vario_exp, ini.cov.pars = kInitialValues, 
                           cov.model = kCovModel, fix.nugget = T, 
-                          nugget = kNuggetLand, weights = kWeights)
+                          nugget = kNugget, weights = kWeights)
     range <- 3 * vario_wls$cov.pars[2]
     sill <- vario_wls$cov.pars[1]
 
@@ -147,7 +165,7 @@ CalculateRange <- function(base_point, oco2info_need){
                           bin.cloud = T)
       vario_wls <- variofit(vario_exp, ini.cov.pars = kInitialValues, 
                             cov.model = kCovModel, fix.nugget = T, 
-                            nugget = kNuggetLand, weights = kWeights)
+                            nugget = kNugget, weights = kWeights)
       range <- 3 * vario_wls$cov.pars[2]
       sill <- vario_wls$cov.pars[1]
     }
@@ -179,8 +197,8 @@ CalculateRange <- function(base_point, oco2info_need){
                                   nrow = 1, ncol = 2),
                      krige = krige.control(type.krige = kKriging,
                                            cov.model = kKrigingCovModel,
-                                           cov.pars=c(sill, 1/3 * range), 
-                                           nugget = kNuggetLand, micro.scale = 0),
+                                           cov.pars = c(sill, 1/3 * range), 
+                                           nugget = kNugget, micro.scale = 0),
                      output = output.control(signal = TRUE))
     co2_est <- ok$predict
     est_error <- ok$krige.var

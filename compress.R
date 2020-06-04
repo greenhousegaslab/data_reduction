@@ -16,7 +16,8 @@ library(R.matlab)
 library(geosphere)
 library(dplyr)
 source("CalculateRange.R")
-# File that save the observations sounding id separately
+# File that saves the observations sounding id, extracted from satellite 
+# observation information file (information.mat).
 # Reason: R.matlab package can't import souding id from mat file correctly.
 # Details for data format:
 #   sounding_id (data.frame)
@@ -26,6 +27,7 @@ load("sounding_id.Rdata")
 #-----------------------------------#
 # Constant Variables                #
 #-----------------------------------#
+#! CHANGE THE PARAMETERS BELOW FOR YOUR PARTICULAR SETUP
 # File path to read in satellite observation information
 # Details for data format:
 #   outmat (cell)
@@ -44,11 +46,14 @@ kFilePathInfo <- "information.mat"
 #   background (double)
 kFilePathBackground <- "background.mat"
 # Level of compression: how much we want to compress the data
-# i.e. CL = 500km, kScalingFactor = 0.05
+# i.e. range = 500km, kScalingFactor = 0.05
 # Meaning that we want to choose the next observation at the distance of 
 # 25km (500 * 0.05 = 25km)
 kScalingFactor <- 0.05
 # Acceptable deviation of distance when choosing the next observation
+# i.e. range = 500km, kScalingFactor = 0.05, kDevFactor = 0.2
+# Meaning that we allow to choose the next observation at the distance of 
+# 30km (500 * 0.05 * (1 + 0.2) = 30km), with 5km deviation (500 * 0.05 * 0.2 = 5km).
 kDevFactor <- 0.2
 # File path to save result
 # Details for data format:

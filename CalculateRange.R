@@ -52,9 +52,9 @@ CalculateRange <- function(base_point, oco2info_need){
   # kNugget represents variability that is uncorrelated from one observation
   # to the next.
   # kWeights represents type weights used in the loss function.
-  kCovModel = 'exp'
+  kCovModel <- 'exp'
   kNugget <- (1.3)^2
-  kWeights = 'npairs'
+  kWeights <- 'npairs'
   # kReFitThreshold is the threshold to determine whether to re-calculate range.
   # Reason for using 10: in our case project, most of the fitting variograms 
   # with range smaller than 10km had bad fit, thus we re-set to kBinAgain and kMaxDistAgain 

@@ -172,6 +172,7 @@ CalculateRange <- function(base_point, oco2info_need){
   # is observed on Jul 1, we want to choose observations which are observed on
   # Jul 1, Jul 2, Jul 3 because we don't have observations observed in June.
   # Same for the rest of the if statement.
+  #! CHANGE THE PARAMETERS BELOW FOR YOUR PARTICULAR SETUP
   if (base_point$month == 7 & base_point$day == 1) {
     data_base <- oco2info_need[apply(oco2info_need['month'], 1, 
                                function(x) any(x == 7)), ]

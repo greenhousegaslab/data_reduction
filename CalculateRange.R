@@ -79,7 +79,7 @@ CalculateRange <- function(base_point, oco2info_need){
   #-----------------------------------#
   
   leap_year_check <- function(yr) {
-      if ((start_year % 4 == 0 & start_year % 100 != 0) | (start_year % 400 == 0)) {
+      if ((yr %% 4 == 0 & yr %% 100 != 0) | (yr %% 400 == 0)) {
           result <- TRUE
       }
       else {
@@ -87,20 +87,20 @@ CalculateRange <- function(base_point, oco2info_need){
       }
   }
   
-  leap_year_start <- leap_year_check(start_year)
-  leap_year_end <- leap_year_check(end_year)
-
-  days_in_month <- function(month, leap_year) {
-    if (month == 4 | month == 6 | month == 9 | month == 11)
-      result <- 30
+  days_in_month <- function(month, yr) {
+      if (month == 4 | month == 6 | month == 9 | month == 11) {
+        result <- 30
+      }
     else if (month == 2) {
-      if (leap_year == TRUE)
+      if (leap_year_check(yr) == TRUE) {
         result <- 29
-      else
+      } else {
         result <- 28
+      }
     }
-    else
+    else {
         result <- 31
+    }
   }
 
   #------------------------------------#
@@ -128,8 +128,8 @@ CalculateRange <- function(base_point, oco2info_need){
                                  function(x) any(x == first_month_data$day - 1 + prev_month_days | 
                                  x == first_month_data$day - 2 + prev_month_days)), ]
         #This could include days such as July 32nd e.g., but because there is no data for this day it is of no consequence
-        second_month_data <- second_month_data[apply(second_month_data['day'], 1, function(x) any(x == (base_point$day) | x == (base_point$day + 1)
-                                                                                                  | x == (base_point$day + 2) | x == (base_point - 1)), ]
+        second_month_data <- second_month_data[apply(second_month_data['day'], 1, function(x) any(x == base_point$day | x == base_point$day + 1
+                                                                                                  | x == base_point$day + 2 | x == base_point - 1)), ]
         data_base <- rbind(first_month_data, second_month_data)
     }
     else {
@@ -139,7 +139,7 @@ CalculateRange <- function(base_point, oco2info_need){
 
   end_of_month_base_pt_check <- function(base_point) {
     #checking if base_point will need carryover from next month
-    if(base_point$day > days_in_month(base_point$month, leap_year_check(base_point$year)) - 2) {
+    if(base_point$day > days_in_month(base_point$month, base_point$year) - 2) {
         first_month_data <- oco2info_need[apply(oco2info_need['month'], 1, function(x) any(x == base_point$month)), ]
         if (base_point$month != 12) {
             second_month_data <- oco2info_need[apply(oco2info_need['month'], 1, function(x) any(x == base_point$month + 1)), ]
@@ -151,10 +151,10 @@ CalculateRange <- function(base_point, oco2info_need){
                                  function(x) any(x == first_month_data$day | 
                                  x == first_month_data$day-2 | x == first_month_data$day-1 | 
                                  x == first_month_data$day+1 | x == first_month_data$day+2)), ]
-        second_month_data <- second_month_data[apply(second_month_data['day'], 1, function(x) any(x == (base_point$day + 1) 
+        second_month_data <- second_month_data[apply(second_month_data['day'], 1, function(x) any(x == base_point$day + 1 
                                                                                                   %% days_in_month(base_point$month, base_point$year) |
-                                                                                                  x == (base_point$day + 2) %% 
-                                                                                                  days_in_month(base_point$month, base_point$year)), ]
+                                                                                                  x == base_point$day + 2 %% 
+                                                                                                  days_in_month(base_point$month, base_point$year))), ]
         #This captures all day numbers after the base_point as potential candidates for inclusion from the second month
         #e.g. for base_point of Jul 30, this captures Aug 0 (meaningless) and Aug 1. As Aug 0 finds no data, there is no need for add. filtering.
         data_base <- rbind(first_month_data, second_month_data)

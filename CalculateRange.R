@@ -2,7 +2,7 @@
 # SCRIPT: CalculateRange.R                                                    #
 # PURPOSE: Calculate correlation length and use ordinary kriging              #
 #          to estimate co2.                                                   #
-# Xiaoling Liu, June 11, 2019                                                 #
+# Xiaoling Liu, June 11, 2019, adapted by X.Liu and A.Weinbren in Jun 2020    #
 #-----------------------------------------------------------------------------#
 
 CalculateRange <- function(base_point, oco2info_need){
@@ -76,40 +76,9 @@ CalculateRange <- function(base_point, oco2info_need){
   #-----------------------------------#
   # Data pre-process                  #
   #-----------------------------------#
-  # Note for if statement: we want to choose observations within 2 days. 
-  # The time period of data for this script is 7/1 ~ 8/8. If the base point
-  # is observed on Jul 1, we want to choose observations which are observed on
-  # Jul 1, Jul 2, Jul 3 because we don't have observations observed in June.
-  # Same for the rest of the if statement.
-  #! CHANGE THE PARAMETERS BELOW FOR YOUR PARTICULAR SETUP
-  if (base_point$month == 7 & base_point$day == 1) {
-    data_base <- oco2info_need[apply(oco2info_need['month'], 1, 
-                               function(x) any(x == 7)), ]
-    data_base <- data_base[apply(data_base['day'], 1, 
-                                 function(x) any(x == 1 | x == 2 | x == 3)), ]
-  } else if (base_point$month == 7 & base_point$day == 2) {
-    data_base <- oco2info_need[apply(oco2info_need['month'], 1, 
-                               function(x) any(x == 7)), ]
-    data_base <- data_base[apply(data_base['day'], 1, 
-                           function(x) any(x == 1 | x == 2 | x == 3 | x == 4)), ]
-  } else if (base_point$month == 8 & base_point$day == 7) {
-    data_base <- oco2info_need[apply(oco2info_need['month'], 1, 
-                               function(x) any(x == 8)), ]
-    data_base <- data_base[apply(data_base['day'], 1, 
-                           function(x) any(x == 5 | x == 6 | x == 7 | x == 8)), ]
-  } else if (base_point$month == 8 & base_point$day == 8) {
-    data_base <- oco2info_need[apply(oco2info_need['month'], 1, 
-                               function(x) any(x == 8)), ]
-    data_base <- data_base[apply(data_base['day'], 1, 
-                           function(x) any(x == 6 | x == 7 | x == 8)), ]
-  } else {
-    data_base <- oco2info_need[apply(oco2info_need['month'], 1, 
-                               function(x) any(x == base_point$month)), ]
-    data_base <- data_base[apply(data_base['day'], 1, 
-                                 function(x) any(x == base_point$day | 
-                                 x == base_point$day-2 | x == base_point$day-1 | 
-                                 x == base_point$day+1 | x == base_point$day+2)), ]
-  }
+  # choose obs within the same day
+  data_base <- subset(oco2info_need, month == base_point$month)
+  data_base <- subset(data_base, day == base_point$day)
   # choose points within a circle with radius kDistance
   mylist <- list()
   for (k in 1:nrow(data_base)) {

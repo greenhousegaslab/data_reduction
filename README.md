@@ -10,7 +10,7 @@ Introduction and overview
 This code repository contains R scripts for running the data reduction process. 
 The overall strategy is to first characterize the decorrelation length among the satellite observation and second, use local kriging to interpolate the satellite observations to a number of locations that is smaller than the original dataset. The choice of locations is informed by the decorrelation length: we retain fewer locations in regions where the observations are correlated over longer distances and more locations in regions with a shorter decorrelation length.
 
-Most aspects of these scripts do not need to be customized or edited by the user. However, a few aspects of the scripts need to be customized for your work, and those sections of the scripts are basically in the INITIALIZATION section, CONSTANT VARIABLES section and scripts that are clearly marked. 
+Most aspects of these scripts do not need to be customized or edited by the user. However, a few aspects of the scripts need to be customized for your work, and those sections of the scripts are basically in the INITIALIZATION section and CONSTANT VARIABLES section. 
 
 ----------------------------------------------------------
 Fair use

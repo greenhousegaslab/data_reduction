@@ -1,7 +1,7 @@
 #  data reduction for large atmospheric satellite datasets
 This repository contains R code for reducting large atmospheric satellite datasets.
 
-Authors: Xiaoling Liu and Scot Miller. (Note: we want this code repository to be a collaborative effort, and the more authors/contributors, the better!)
+Authors: Xiaoling Liu, August Weinbren, and Scot Miller. (Note: we want this code repository to be a collaborative effort, and the more authors/contributors, the better!)
 
 ----------------------------------------------------------
 Introduction and overview
@@ -16,7 +16,7 @@ Most aspects of these scripts do not need to be customized or edited by the user
 Fair use
 ----------------------------------------------------------
 
-Please send us an email (xiaolingliu96 [at] gmail.com and scot.m.miller [at] gmail.com) if you are thinking of using these scripts in your research. We would love to hear more about what you are working on and if we can help in any way. 
+Please send us an email (xiaolingliu96 [at] gmail.com, august.weinbren96 [at] gmail.com, and scot.m.miller [at] gmail.com) if you are thinking of using these scripts in your research. We would love to hear more about what you are working on and if we can help in any way. 
 
 Also, please make sure to cite the companion article if you do use these scripts in your work.
 

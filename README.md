@@ -43,13 +43,13 @@ Contact information
 Xiaoling Liu <br>
 Johns Hopkins University <br>
 Department of Environmental Health and Engineering <br>
-Email: xiaolingliu96 [at] gmail.com
+Email: xiaolingliu96 [at] gmail.com <br>
 http://greenhousegaslab.org/ 
 
 August Weinbren <br>
 Johns Hopkins University <br>
 Department of Environmental Health and Engineering <br>
-Email: august.weinbren96@gmail.com
+Email: august.weinbren96@gmail.com <br>
 http://greenhousegaslab.org/ 
 
 Scot Miller <br>

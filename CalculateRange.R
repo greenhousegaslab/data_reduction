@@ -92,7 +92,7 @@ CalculateRange <- function(base_point, oco2info_need){
   rawdata <- data.frame(co2_cal_in)
 
   #-----------------------------------#
-  # Convert coordiantes               #
+  # Convert coordinates               #
   #-----------------------------------#
   # Note: this system wouldn’t work if your domain 
   #       crossed the international dateline

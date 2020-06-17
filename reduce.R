@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------------#
-# SCRIPT: compress.R                                                          #
-# PURPOSE: Compress large atmospheric satellite datasets.                     #
-# Xiaoling Liu, June 11, 2019                                                #
+# SCRIPT: reduce.R                                                            #
+# PURPOSE: Reduce large atmospheric satellite datasets.                       #
+# Xiaoling Liu, June 11, 2019                                                 #
 #-----------------------------------------------------------------------------#
 
 #-----------------------------------#
@@ -45,7 +45,7 @@ kFilePathInfo <- "information.mat"
 # Details for data format:
 #   background (double)
 kFilePathBackground <- "background.mat"
-# Level of compression: how much we want to compress the data
+# Level of reduction: how much we want to reduce the data
 # i.e. range = 500km, kScalingFactor = 0.05
 # Meaning that we want to choose the next observation at the distance of 
 # 25km (500 * 0.05 = 25km)
@@ -115,7 +115,7 @@ oco2info_need <- subset(oco2info_need, quality_flag == 0)
 oco2info_need <- data.frame(oco2info_need)
 
 #-----------------------------------#
-# Data compression                  #
+# Data reduction                  #
 #-----------------------------------#
 path <- unique(oco2info_need[['sounding_path_number']])
 result = list()

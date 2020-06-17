@@ -25,7 +25,7 @@ Also, please make sure to cite the companion article if you do use these scripts
 List of scripts in the repository
 ----------------------------------------------------------
 
-SCRIPT: compress.R <br>
+SCRIPT: reduce.R <br>
 PURPOSE: Data Reduction for large atmospheric satellite datasets. <br>
 CALLED BY: None. <br>
 CALLS: CalculateRange.R <br>

@@ -115,7 +115,7 @@ oco2info_need <- subset(oco2info_need, quality_flag == 0)
 oco2info_need <- data.frame(oco2info_need)
 
 #-----------------------------------#
-# Data compression                  #
+# Data reduction                  #
 #-----------------------------------#
 path <- unique(oco2info_need[['sounding_path_number']])
 result = list()

@@ -46,7 +46,7 @@ Department of Environmental Health and Engineering <br>
 Email: xiaolingliu96 [at] gmail.com
 http://greenhousegaslab.org/ 
 
-August Weinbren
+August Weinbren <br>
 Johns Hopkins University <br>
 Department of Environmental Health and Engineering <br>
 Email: august.weinbren96@gmail.com
